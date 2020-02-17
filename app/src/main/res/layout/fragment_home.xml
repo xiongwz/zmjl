@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_color">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/topview_height">
+        <com.cwjl.cn.view.TopViewLayout
+            android:id="@+id/topview"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/topview_height"
+            app:topview_title="首页"/>
+        <TextView
+            android:id="@+id/tv_look"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding_10"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:text="预览分销页"
+            android:textSize="@dimen/font_16"
+            android:textColor="@color/white"
+            android:visibility="gone"/>
+    </RelativeLayout>
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <com.cwjl.cn.view.headerrecycleview.HeaderRecyclerView
+                android:id="@+id/recycleview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/topview"/>
+            <include layout="@layout/layout_no_data" />
+        </RelativeLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+</LinearLayout>

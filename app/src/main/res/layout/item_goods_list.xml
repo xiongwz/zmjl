@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/item_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="@dimen/padding_10"
+    android:paddingTop="@dimen/padding_15"
+    android:paddingRight="@dimen/padding_10"
+    android:paddingBottom="@dimen/padding_15"
+    android:background="@color/white">
+    <com.cwjl.cn.view.RoundImageView
+        android:id="@+id/iv_image"
+        android:layout_width="120dp"
+        android:layout_height="140dp"
+        android:src="@mipmap/default_square"
+        android:scaleType="centerCrop"
+        app:type="round"
+        app:radius="@dimen/margin_10"/>
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_10"
+        android:ellipsize="end"
+        android:lineSpacingExtra="@dimen/padding_3"
+        android:text=""
+        android:textSize="@dimen/font_15"
+        android:textColor="@color/text_color_28"/>
+
+</LinearLayout>

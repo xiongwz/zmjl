@@ -1,0 +1,2 @@
+include ':app', ':bottomtabbar'
+rootProject.name='My Application'

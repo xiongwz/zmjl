@@ -1,0 +1,21 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <com.cwjl.cn.view.TopViewLayout
+        android:id="@+id/topview"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/topview_height"
+        app:topview_title="查看图片"
+        app:topview_left="@drawable/icon_back_white"/>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/id_viewpager"
+        android:background="@color/bg_color"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/topview">
+    </androidx.viewpager.widget.ViewPager>
+
+</RelativeLayout>
