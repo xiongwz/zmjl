@@ -70,5 +70,10 @@
         android:text=""
         android:textSize="@dimen/font_15"
         android:textColor="@color/text_color_28"/>
+    <Button
+        android:id="@+id/btn_float"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="将图片悬浮"/>
 
 </LinearLayout>

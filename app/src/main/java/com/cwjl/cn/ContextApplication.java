@@ -25,6 +25,7 @@ import java.util.Properties;
 
 public class ContextApplication extends Application {
 
+    public static List<String> mFloatImageList;
     private List<Activity> mList = new LinkedList<Activity>();
     private static ContextApplication instance;
     public static Context mContext;
