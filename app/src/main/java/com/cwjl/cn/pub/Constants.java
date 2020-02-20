@@ -92,4 +92,7 @@ public class Constants {
     //云通讯
     public static final String YUNTONGXUN_APPKER_CODE = "8aaf0708697b6beb0169b8ddd78125ca";
     public static final String YUNTONGXUN_TOKEN = "08a96c911caa1401a7304cc1eaf2c917";
+
+    // 下载的缓存文件后缀名
+    public static final String UXUE_TEMP_FILE_SUFFIX = ".zip";
 }

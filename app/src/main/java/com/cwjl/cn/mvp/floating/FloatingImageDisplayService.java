@@ -23,6 +23,10 @@ import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.cwjl.cn.ContextApplication;
 import com.cwjl.cn.R;
+import com.cwjl.cn.utils.PathHolder;
+import com.cwjl.cn.utils.Util;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,6 +47,7 @@ public class FloatingImageDisplayService extends Service {
 
     private List<String> images = new ArrayList<>();
     private int imageIndex = 0;
+    private boolean mIsFloating;
 
     private Handler changeImageHandler;
 
@@ -59,11 +64,12 @@ public class FloatingImageDisplayService extends Service {
         }
         layoutParams.format = PixelFormat.RGBA_8888;
         layoutParams.gravity = Gravity.LEFT | Gravity.TOP;
-        layoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
-        layoutParams.width = 500;
-        layoutParams.height = 500;
-        layoutParams.x = 300;
-        layoutParams.y = 300;
+//        layoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
+        layoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
+        layoutParams.width = Util.getScreenWidth(this);
+        layoutParams.height = Util.getScreenHeight(this);
+//        layoutParams.x = 300;
+//        layoutParams.y = 300;
 
         changeImageHandler = new Handler(this.getMainLooper(), changeImageCallback);
     }
@@ -77,11 +83,45 @@ public class FloatingImageDisplayService extends Service {
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        if (null != ContextApplication.mFloatImageList && ContextApplication.mFloatImageList.size() > 0) {
-            images = ContextApplication.mFloatImageList;
-            showFloatingWindow();
+        if (mIsFloating) {
+            windowManager.removeView(displayView);
+            mIsFloating = false;
         }
+        images = getFilesAllName(PathHolder.FILE_CACHE_ZIP);
+        imageIndex = 0;
+        showFloatingWindow();
         return super.onStartCommand(intent, flags, startId);
+    }
+
+    public static List<String> getFilesAllName(String path){
+        //传入指定文件夹的路径
+        File file = new File(path);
+        File[] files = file.listFiles();
+        List<String> imagePaths = new ArrayList<>();
+        for(int i = 0; i < files.length; i++){
+            if(checkIsImageFile(files[i].getPath())){
+                imagePaths.add(files[i].getPath());
+            }
+
+        }
+        return imagePaths;
+    }
+
+    /**
+     * 判断是否是照片
+     */
+    public static boolean checkIsImageFile(String fName){
+        boolean isImageFile = false;
+        //获取拓展名
+        String fileEnd = fName.substring(fName.lastIndexOf(".") + 1,
+                fName.length()).toLowerCase();
+        if(fileEnd.equals("jpg") || fileEnd.equals("png") || fileEnd.equals("gif")
+                || fileEnd.equals("jpeg")|| fileEnd.equals("bmp")){
+            isImageFile = true;
+        }else{
+            isImageFile = false;
+        }
+        return isImageFile;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -102,7 +142,7 @@ public class FloatingImageDisplayService extends Service {
             }
             windowManager.addView(displayView, layoutParams);
 
-            changeImageHandler.sendEmptyMessageDelayed(0, 2000);
+            changeImageHandler.sendEmptyMessageDelayed(0, 100);
         }
     }
 
@@ -110,22 +150,24 @@ public class FloatingImageDisplayService extends Service {
         @Override
         public boolean handleMessage(Message msg) {
             if (msg.what == 0) {
-//                imageIndex++;
-//                if (imageIndex >= 5) {
-//                    imageIndex = 0;
-//                }
+                imageIndex++;
+                if (imageIndex >= images.size()) {
+                    imageIndex = 0;
+                }
                 if (displayView != null) {
+//                    Glide.with(FloatingImageDisplayService.this).load(new File(images.get(imageIndex))).error(R.mipmap.default_square).into((ImageView) displayView.findViewById(R.id.image_display_imageview));
 //                    ((ImageView) displayView.findViewById(R.id.image_display_imageview)).setImageResource(images.get(imageIndex));
-                    Glide.with(FloatingImageDisplayService.this).load(images.get(imageIndex)).error(R.mipmap.default_square).placeholder(R.mipmap.default_square).into(new SimpleTarget<GlideDrawable>() {
+                    Glide.with(FloatingImageDisplayService.this).load(new File(images.get(imageIndex))).error(R.mipmap.default_square).placeholder(R.mipmap.default_square).into(new SimpleTarget<GlideDrawable>() {
                         @Override
                         public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
                             Drawable current = resource.getCurrent();
                             ((ImageView) displayView.findViewById(R.id.image_display_imageview)).setImageDrawable(current);
+                            mIsFloating = true;
                         }
                     });
                 }
 
-                changeImageHandler.sendEmptyMessageDelayed(0, 2000);
+                changeImageHandler.sendEmptyMessageDelayed(0, 100);
             }
             return false;
         }
@@ -156,7 +198,7 @@ public class FloatingImageDisplayService extends Service {
                 default:
                     break;
             }
-            return false;
+            return true;
         }
     }
 }

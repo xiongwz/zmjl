@@ -50,6 +50,7 @@
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
 
         <service android:name=".mvp.floating.FloatingImageDisplayService"></service>
+        <service android:name=".mvp.downzip.DownloadZipService"></service>
     </application>
 
 </manifest>

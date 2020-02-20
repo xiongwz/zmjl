@@ -12,7 +12,8 @@
             android:id="@+id/topview"
             android:layout_width="match_parent"
             android:layout_height="@dimen/topview_height"
-            app:topview_title="详情"/>
+            app:topview_title="详情"
+            app:topview_left="@drawable/icon_back_white"/>
         <TextView
             android:id="@+id/tv_look"
             android:layout_width="wrap_content"

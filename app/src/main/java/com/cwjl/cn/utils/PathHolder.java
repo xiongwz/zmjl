@@ -5,11 +5,12 @@ import android.os.Environment;
 import java.io.File;
 
 public class PathHolder {
-	public final static String ROOT = getRoot() + "/ztx/";
+	public final static String ROOT = getRoot() + "/cmjl/";
 
-	public final static String TEMP = getRoot() + "/ztx/temp/";
-	public final static String CATCH = getRoot() + "/ztx/catch/";  // 缓存文件，清理缓存时将被清理
+	public final static String TEMP = getRoot() + "/cmjl/temp/";
+	public final static String CATCH = getRoot() + "/cmjl/catch/";  // 缓存文件，清理缓存时将被清理
 	public final static String FILE_CACHE = TEMP + "file/";
+	public final static String FILE_CACHE_ZIP = FILE_CACHE + "zip/";
 	public final static String IMAGE_CACHE = TEMP + "image/";
 	public final static String CHAtS_CACHE = TEMP + "chats/";
 
@@ -28,7 +29,7 @@ public class PathHolder {
 	 * @return
 	 */
 	public static boolean mkAllPath() {
-		String[] paths = {ROOT, TEMP, FILE_CACHE, IMAGE_CACHE,SYSTEM,IMAGE_LOADER_PATH };
+		String[] paths = {ROOT, TEMP, FILE_CACHE, FILE_CACHE_ZIP, IMAGE_CACHE,SYSTEM,IMAGE_LOADER_PATH };
 		for (int k = 0; k < paths.length; k++) {
 			if (!mkdir(new File(paths[k]))) {
 				return false;
